@@ -1,25 +1,32 @@
 extends CharacterBody2D
 
+@onready var animation_tree : AnimationTree = $AnimationTree
+@export var walk_speed : float = 130.0
+@export var run_speed : float = 260.0
+var direction : Vector2 = Vector2.ZERO
 
-const SPEED = 130.0
-const JUMP_VELOCITY = -400.0
+func _ready():
+	animation_tree.active = true
 
+func _process(delta):
+	update_animation_parameters()
 
-func _physics_process(delta: float) -> void:
-	# Add the gravity.
-	if not is_on_floor():
-		velocity += get_gravity() * delta
+func get_input():
+	direction = Input.get_vector("left", "right", "up", "down")
+	velocity = direction * walk_speed
+	move_and_slide()
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
+func _physics_process(_delta: float) -> void:
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
-	var direction := Input.get_axis("ui_left", "ui_right")
-	if direction:
-		velocity.x = direction * SPEED
-	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
+	get_input()
 
-	move_and_slide()
+func update_animation_parameters():
+	if (velocity == Vector2.ZERO):
+		animation_tree["parameters/conditions/idle"] = true
+		animation_tree["parameters/conditions/is_moving"] = false
+	else:
+		animation_tree["parameters/conditions/idle"] = false
+		animation_tree["parameters/conditions/is_moving"] = true
+	animation_tree["parameters/Idle/blend_position"] = direction
+	animation_tree["parameters/Walk/blend_position"] = direction
