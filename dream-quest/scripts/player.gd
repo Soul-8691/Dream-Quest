@@ -28,5 +28,6 @@ func update_animation_parameters():
 	else:
 		animation_tree["parameters/conditions/idle"] = false
 		animation_tree["parameters/conditions/is_moving"] = true
-	animation_tree["parameters/Idle/blend_position"] = direction
-	animation_tree["parameters/Walk/blend_position"] = direction
+	if (direction != Vector2.ZERO):
+		animation_tree["parameters/Idle/blend_position"] = direction
+		animation_tree["parameters/Walk/blend_position"] = direction
