@@ -1,7 +1,8 @@
-[gd_scene load_steps=5 format=3 uid="uid://cy21ckxdrnox4"]
+[gd_scene load_steps=6 format=3 uid="uid://cy21ckxdrnox4"]
 
 [ext_resource type="PackedScene" uid="uid://cjp7s0r0a273h" path="res://scenes/player.tscn" id="1_uwrxv"]
 [ext_resource type="Texture2D" uid="uid://dtd8kivsg3hrj" path="res://assets/mountain_tiles.png" id="2_yqjtg"]
+[ext_resource type="PackedScene" uid="uid://bgfvrkrxooten" path="res://scenes/enemy.tscn" id="3_lnu2h"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_lnu2h"]
 texture = ExtResource("2_yqjtg")
@@ -91,3 +92,12 @@ position = Vector2(0, 18)
 [node name="Camera2D" type="Camera2D" parent="Player"]
 position = Vector2(0, -18)
 position_smoothing_enabled = true
+
+[node name="Enemy" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(131, -79)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(231, 161)
+
+[node name="Enemy3" parent="." instance=ExtResource("3_lnu2h")]
+position = Vector2(332, -3)
